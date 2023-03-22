@@ -3,6 +3,10 @@ require("dotenv").config();
 
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const methodOverride = require("method-override");
+// const { flash } = require("express-flash-message");
+// const session = require("express-session");
+// const flash = require("connect-flash");
 
 //!importing database connection
 const connectDB = require("./server/config/db");
@@ -16,8 +20,26 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//Method Override
+app.use(methodOverride("_method"));
+
 //Static files
 app.use(express.static("public"));
+
+//Setup Express Session
+// app.use(
+//   session({
+//     secret: "secret",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+//     },
+//   })
+// );
+
+//Setup Express Flash Message
+// app.use(flash({ sessionKeyName: "flashMessage" }));
 
 //Template Engine
 app.use(expressLayouts);
